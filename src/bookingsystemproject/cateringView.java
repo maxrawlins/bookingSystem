@@ -16,7 +16,7 @@ public class cateringView extends javax.swing.JFrame {
      */
     public cateringView() {
         initComponents();
-           usefulMethods u = new usefulMethods();
+          usefulMethods u = new usefulMethods();
           String b = "";
           System.out.println(u.bookings.size());
         for(int i = 0 ; i<u.bookings.size();i++){
@@ -41,6 +41,9 @@ public class cateringView extends javax.swing.JFrame {
         jTextArea1 = new javax.swing.JTextArea();
         jButton1 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
+        monthSelection = new javax.swing.JComboBox<>();
+        daySelection = new javax.swing.JComboBox<>();
+        jButton2 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -49,7 +52,7 @@ public class cateringView extends javax.swing.JFrame {
         jTextArea1.setRows(5);
         jScrollPane1.setViewportView(jTextArea1);
 
-        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(78, 93, 730, 310));
+        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 150, 730, 310));
 
         jButton1.setText("home");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -57,11 +60,30 @@ public class cateringView extends javax.swing.JFrame {
                 jButton1ActionPerformed(evt);
             }
         });
-        getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 450, -1, -1));
+        getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 460, -1, -1));
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         jLabel1.setText("Catering bookings");
         getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 50, 240, 40));
+
+        monthSelection.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "january", "febuary", "march", "april", "may", "june", "july", "august", "september", "october", "november", "december" }));
+        monthSelection.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                monthSelectionActionPerformed(evt);
+            }
+        });
+        getContentPane().add(monthSelection, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 470, -1, -1));
+
+        daySelection.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31" }));
+        getContentPane().add(daySelection, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 470, 90, -1));
+
+        jButton2.setText("Search");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+        getContentPane().add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 470, -1, -1));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -70,6 +92,22 @@ public class cateringView extends javax.swing.JFrame {
         usefulMethods u = new usefulMethods();
         u.homeButton();
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void monthSelectionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_monthSelectionActionPerformed
+
+    }//GEN-LAST:event_monthSelectionActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+      usefulMethods u = new usefulMethods();
+      String b ="";
+        for (int i =0; i<u.bookings.size();i++){
+           if( u.bookings.get(i).getMonth().equals(monthSelection.getSelectedItem().toString())  &&   (u.bookings.get(i).getDay()+"").equals(daySelection.getSelectedItem().toString())){
+                b=b+"\n\n Room Number: "+u.bookings.get(i).getRoomNo()+"       "+ u.bookings.get(i).getMonth()+ " / "+u.bookings.get(i).getDay()+ " / "+u.bookings.get(i).getTime()+"\n"+u.bookings.get(i).getRefreshmentTime() +"into the meeting     "+u.bookings.get(i).getRefreshments();
+           }
+           
+       }
+        jTextArea1.setText(b);
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -107,9 +145,12 @@ public class cateringView extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JComboBox<String> daySelection;
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextArea jTextArea1;
+    private javax.swing.JComboBox<String> monthSelection;
     // End of variables declaration//GEN-END:variables
 }

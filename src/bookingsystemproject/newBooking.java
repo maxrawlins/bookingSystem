@@ -68,6 +68,7 @@ public class newBooking extends javax.swing.JFrame {
         emailErrorMessage = new javax.swing.JLabel();
         bookingErrorMessage = new javax.swing.JLabel();
         alreadyBookingErrorMessage = new javax.swing.JLabel();
+        jLabel10 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -206,6 +207,11 @@ public class newBooking extends javax.swing.JFrame {
         alreadyBookingErrorMessage.setText("you already have a booking on this day");
         getContentPane().add(alreadyBookingErrorMessage, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 530, 470, 50));
 
+        jLabel10.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
+        jLabel10.setForeground(new java.awt.Color(102, 51, 255));
+        jLabel10.setText("(please include notes if you have more specific requirements or allergies)");
+        getContentPane().add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 390, 340, 20));
+
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
@@ -330,6 +336,7 @@ public class newBooking extends javax.swing.JFrame {
     private javax.swing.JLabel emailErrorMessage;
     private javax.swing.JTextField emailField;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;

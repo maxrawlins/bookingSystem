@@ -23,6 +23,7 @@ public class usefulMethods {
         }
         return b;
     }
+   
     public boolean alreadyGotBooking(String month, String day , String time,String email){
          boolean isAvailable = true;
         for (int i=0 ; i<bookings.size();i++){

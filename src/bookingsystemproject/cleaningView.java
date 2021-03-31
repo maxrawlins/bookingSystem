@@ -26,17 +26,21 @@ public class cleaningView extends javax.swing.JFrame {
                 prep = " no need to layout resources";
             }else{
                 try {
-                    prep ="Please set out "+ u.bookings.get(i+1).getResources() +" for the next meeting";
+                    prep ="Please set out "+ u.bookings.get(i+1).getResources() +" for the next meeting in room "+u.bookings.get(i+1).getRoomNo();
                 } catch (Exception e) {
-                    System.out.println("error:"+e);
+                    System.out.println("error:  "+e);
                 }
                 
             }
             
             
             
-            System.out.println(u.bookings.get(i).getTime().substring(0,1));
-            String cleaningTime = u.bookings.get(i).getTime().substring(0,1)+(Integer.parseInt(u.bookings.get(i).getTime().substring(1,2))+1)+u.bookings.get(i).getTime().substring(2, 5);
+            String cleaningTime ="";
+            if(u.bookings.get(i).getTime().equals("09:00")){
+                cleaningTime =  "10:00";
+            }else{
+            cleaningTime = u.bookings.get(i).getTime().substring(0,1)+(Integer.parseInt(u.bookings.get(i).getTime().substring(1,2))+1)+u.bookings.get(i).getTime().substring(2, 5);
+            }
             b=b+"\n\n Room Number: "+u.bookings.get(i).getRoomNo()+"       "+ u.bookings.get(i).getMonth()+ " / "+u.bookings.get(i).getDay()+ " / "+cleaningTime+"\n"+prep;
         }
         jTextArea1.setText(b);
@@ -55,6 +59,10 @@ public class cleaningView extends javax.swing.JFrame {
         jTextArea1 = new javax.swing.JTextArea();
         jButton1 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
+        monthSelection = new javax.swing.JComboBox<>();
+        daySelection = new javax.swing.JComboBox<>();
+        jButton2 = new javax.swing.JButton();
+        jLabel2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -75,7 +83,30 @@ public class cleaningView extends javax.swing.JFrame {
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         jLabel1.setText("cleaning schedule");
-        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 30, 250, 40));
+        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 10, 250, 40));
+
+        monthSelection.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "january", "febuary", "march", "april", "may", "june", "july", "august", "september", "october", "november", "december" }));
+        monthSelection.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                monthSelectionActionPerformed(evt);
+            }
+        });
+        getContentPane().add(monthSelection, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 420, -1, -1));
+
+        daySelection.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31" }));
+        getContentPane().add(daySelection, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 420, 90, -1));
+
+        jButton2.setText("Search");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+        getContentPane().add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 420, -1, -1));
+
+        jLabel2.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
+        jLabel2.setText("after you've finished cleaning please remember to set out resources in the next booked room");
+        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 50, -1, -1));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -84,6 +115,45 @@ public class cleaningView extends javax.swing.JFrame {
       usefulMethods u = new usefulMethods();
       u.homeButton();
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void monthSelectionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_monthSelectionActionPerformed
+
+    }//GEN-LAST:event_monthSelectionActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        usefulMethods u = new usefulMethods();
+        String b ="";
+        for (int i =0; i<u.bookings.size();i++){
+            if( u.bookings.get(i).getMonth().equals(monthSelection.getSelectedItem().toString())  &&   (u.bookings.get(i).getDay()+"").equals(daySelection.getSelectedItem().toString())){
+                 String prep = "";
+            if(i ==u.bookings.size()-1){
+                prep = " no need to layout resources";
+            }else{
+                try {
+                    prep ="Please set out "+ u.bookings.get(i+1).getResources() +" for the next meeting in room "+u.bookings.get(i+1).getRoomNo();
+                } catch (Exception e) {
+                    System.out.println("error:"+e);
+                }
+                
+            }
+            
+            
+            
+             String cleaningTime ="";
+            if(u.bookings.get(i).getTime().equals("09:00")){
+                cleaningTime =  "10:00";
+            }else{
+            cleaningTime = u.bookings.get(i).getTime().substring(0,1)+(Integer.parseInt(u.bookings.get(i).getTime().substring(1,2))+1)+u.bookings.get(i).getTime().substring(2, 5);
+            }
+            
+            //String cleaningTime = u.bookings.get(i).getTime().substring(0,1)+(Integer.parseInt(u.bookings.get(i).getTime().substring(1,2))+1)+u.bookings.get(i).getTime().substring(2, 5);
+            b=b+"\n\n Room Number: "+u.bookings.get(i).getRoomNo()+"       "+ u.bookings.get(i).getMonth()+ " / "+u.bookings.get(i).getDay()+ " / "+cleaningTime+"\n"+prep;
+        
+            }
+
+        }
+        jTextArea1.setText(b);
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -121,9 +191,13 @@ public class cleaningView extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JComboBox<String> daySelection;
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextArea jTextArea1;
+    private javax.swing.JComboBox<String> monthSelection;
     // End of variables declaration//GEN-END:variables
 }
