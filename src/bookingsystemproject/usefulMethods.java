@@ -78,157 +78,9 @@ public class usefulMethods {
         return validDetails;
     }
 
-    public void mainMenu() {
-        bookings = usefulMethods.readFile();
-        Scanner input = new Scanner(System.in);
-        while (true) {
-            boolean validOption = false;
-            int option = 0;
-            while (validOption == false) {
-                System.out.println("hi would you like to\n1>book a room\n2>view rooms booked in your name\n3>exit");
-                try {
-                    option = input.nextInt();
-                    validOption = true;
-                } catch (Exception e) {
-                    System.out.println("needs to be an integer");
-                }
+  
 
-            }
-            if (option == 1) {
-                newBooking();
-            } else if (option == 2) {
-                printBookings();
-            } else if (option == 3) {
-                writeFile(bookings);
-                System.exit(0);
-            }
-        }
-    }
-
-    public void newBooking() {
-        Scanner input = new Scanner(System.in);
-        System.out.println("what is your name:");
-        String name = input.nextLine();
-        boolean validEmail = false;
-        String email = null;
-        while (validEmail == false) {
-            System.out.println("what is your email:");
-            email = input.nextLine();
-            if (email.contains("@")) {
-                validEmail = true;
-            } else {
-                System.out.println("invalid email please try again!");
-                //input.next();
-            }
-        }
-
-        boolean validPassword = false;
-        String password = null;
-        while (validPassword == false) {
-            System.out.println("please choose a password to use;");
-            password = input.nextLine();
-            System.out.println("please re-enter password");
-            String password2 = input.nextLine();
-            if (password.equals(password2)) {
-                validPassword = true;
-            } else {
-                System.out.println("passwords did not match please try again");
-            }
-        }
-        System.out.println("how many people are you booking for ");
-        int numOfpeople = input.nextInt();
-
-        String wheelchair = null;
-        System.out.println("do you need wheelchair access?\n1>yes\n2>no\n(enter as an integer)");
-        int wheelChairAccess = input.nextInt();
-        if (wheelChairAccess == 1) {
-            wheelchair = "yes";
-        } else if (wheelChairAccess == 2) {
-            wheelchair = "no";
-        }
-        //int roomNo = suggestedRoom(numOfpeople);//
-        System.out.println("what month do you require?");
-        input.nextLine();
-        String month = input.nextLine();
-        int daysInMonth = 0;
-        if (month.equals("january")) {
-            daysInMonth = 31;
-        } else if (month.equals("february")) {
-            daysInMonth = 28;
-        } else if (month.equals("march")) {
-            daysInMonth = 31;
-        } else if (month.equals("april")) {
-            daysInMonth = 30;
-        } else if (month.equals("may")) {
-            daysInMonth = 31;
-        } else if (month.equals("june")) {
-            daysInMonth = 30;
-        } else if (month.equals("july")) {
-            daysInMonth = 31;
-        } else if (month.equals("august")) {
-            daysInMonth = 31;
-        } else if (month.equals("september")) {
-            daysInMonth = 30;
-        } else if (month.equals("october")) {
-            daysInMonth = 31;
-        } else if (month.equals("november")) {
-            daysInMonth = 30;
-        } else if (month.equals("december")) {
-            daysInMonth = 31;
-        }
-        boolean validDay = false;
-        int date = 0;
-        while (validDay == false) {
-            System.out.println("which date do you want to book for");
-            date = input.nextInt();
-            if (date > daysInMonth) {
-                System.out.println("this date does not exist as there are not " + date + " days in " + month);
-            } else if (date < daysInMonth) {
-                validDay = true;
-            }
-        }
-        boolean validTime = false;
-        String time=null;
-        while (validTime == false) {
-            time=null;
-            try{
-            System.out.println(" the times available on " + month + " " + date + " are :\n1> 09:00\n2> 10:30\n3> 12:00\n4> 13:30\n5> 15:00\n6> 16:30\n7> 18:00");
-            
-            int timeOption = input.nextInt();
-            if (timeOption == 1) {
-                time = "09:00";
-            } else if (timeOption == 2) {
-                time = "10:30";
-            } else if (timeOption == 3) {
-                time = "12:00";
-            } else if (timeOption == 4) {
-                time = "13:30";
-            } else if (timeOption == 5) {
-                time = "15:00";
-            } else if (timeOption == 6) {
-                time = "16:30";
-            } else if (timeOption == 7) {
-                time = "18:00";
-            }
-            validTime=true;
-            }catch (Exception e) {
-                System.out.println("this wasn't a valid option, please make sure you entered an integer");
-            }
-        }
-        //input.nextLine();
-        //String time = input.nextLine();
-        System.out.println("do you require refreshments?");
-        input.nextLine();
-        String refreshments = input.nextLine();
-
-        System.out.println("what time do you require these at?");
-        String refreshmentTime = input.nextLine();
-        System.out.println("do you require any other resources for the event, e.g. pens paper?");
-        String resources = input.nextLine();
-//        bookingSlot b = new bookingSlot(name, email, password, roomNo, wheelchair, refreshments, refreshmentTime, month, date, time, resources);
-       // bookings.add(b);
-
-    }
+    
 
     public static void writeFile(ArrayList<bookingSlot> bookings) {
         try {
@@ -316,4 +168,40 @@ public void write(){
         start.setVisible(true);
         //this.dispose();
     }
+    public int toHours (String month, String day, String time){
+        int monthHours=0;
+        if (month.equals("january")){
+            monthHours=0;
+        }else if (month.equals("february")){
+            monthHours = 744;
+        }else if (month.equals("march")){
+            monthHours = 1416;
+        }else if (month.equals("april")){
+            monthHours = 2160;
+        }else if (month.equals("may")){
+            monthHours = 2880;
+        }else if (month.equals("june")){
+            monthHours = 3624;
+        }else if (month.equals("july")){
+            monthHours = 4344;
+        }else if (month.equals("august")){
+            monthHours = 5088;
+        }else if (month.equals("september")){
+            monthHours = 5832;
+        }else if (month.equals("october")){
+            monthHours = 6552;
+        }else if (month.equals("november")){
+            monthHours = 7296;
+        }else if (month.equals("december")){
+            monthHours = 8016;
+        }else{
+            System.out.println("error in to hours");
+        }
+        int dayHours = Integer.parseInt(day) *24;
+        int timeHours = Integer.parseInt(time.substring(0, 2));
+        int totalHours = monthHours+dayHours+timeHours;
+        return totalHours;
+        
+    }
+    
 }

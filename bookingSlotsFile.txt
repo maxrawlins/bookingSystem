@@ -7,3 +7,4 @@ rodney, rodney@gmail.com, rodney1, 3, no wheelchair, sandwiches, 20 minutes, apr
 sarah, sarah@gmail.com, sarah1, 4, wheelchair, tea and coffee, 20 minutes, march, 3, 12:00,  paper
 dave, dave@gmail.com, dave1, 2, no wheelchair, water, 10 minutes, march, 11, 09:00,  projector paper
 paul, paul@gmail.com, paul1, 3, no wheelchair, water, 30 minutes, march, 11, 09:00,  paper
+max, max@gmail.com, max1, 4, wheelchair, water, start, may, 4, 16:30,  projector

@@ -5,43 +5,58 @@
  */
 package bookingsystemproject;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.LinkedHashSet;
+
 /**
  *
  * @author maxra
  */
 public class cleaningView extends javax.swing.JFrame {
 
-    /**
-     * Creates new form cleaningView
-     */
+    
     public cleaningView() {
         initComponents();
         usefulMethods u = new usefulMethods();
-          String b = "";
-          
-        for(int i = 0 ; i<u.bookings.size();i++){
-            
-            String prep = "";
-            if(i ==u.bookings.size()-1){
-                prep = " no need to layout resources";
-            }else{
-                try {
-                    prep ="Please set out "+ u.bookings.get(i+1).getResources() +" for the next meeting in room "+u.bookings.get(i+1).getRoomNo();
-                } catch (Exception e) {
-                    System.out.println("error:  "+e);
+        String b = "";
+        ArrayList<String> inOrder = new ArrayList<>();
+        
+        ArrayList<Integer> bookingHours2 = new ArrayList<Integer>();
+        for (int i = 0; i < u.bookings.size(); i++) {
+         
+            bookingHours2.add(u.toHours(u.bookings.get(i).getMonth(), u.bookings.get(i).getDay() + "", u.bookings.get(i).getTime()));
+        }
+        Collections.sort(bookingHours2);
+
+        
+        LinkedHashSet<Integer> hashSet = new LinkedHashSet<Integer>(bookingHours2);
+        ArrayList<Integer> bookingHoursWithNoDuplicates = new ArrayList<>(hashSet);
+        
+       
+   
+        for (int k = 0; k < bookingHoursWithNoDuplicates.size(); k++) {
+            for (int l = 0; l < u.bookings.size(); l++) {
+                if (bookingHoursWithNoDuplicates.get(k) == u.toHours(u.bookings.get(l).getMonth(), u.bookings.get(l).getDay() + "", u.bookings.get(l).getTime())) {
+                    String cleaningTime = "";
+                    if (u.bookings.get(l).getTime().equals("09:00")) {
+                        cleaningTime = "10:00";
+                    } else {
+                        cleaningTime = u.bookings.get(l).getTime().substring(0, 1) + (Integer.parseInt(u.bookings.get(l).getTime().substring(1, 2)) + 1) + u.bookings.get(l).getTime().substring(2, 5);
+                    }
+
+                    inOrder.add("please set out "+ u.bookings.get(l).getResources()+" for the meeting commencing at "+ u.bookings.get(l).getTime()+" in room "+ u.bookings.get(l).getRoomNo()+"\nplease clean Room Number: " + u.bookings.get(l).getRoomNo() + "       " + u.bookings.get(l).getMonth() + " / " + u.bookings.get(l).getDay() + " / " + cleaningTime + "\n");
+
                 }
-                
+
             }
+        }
+
+        for (int k = 0; k < inOrder.size(); k++) {
             
-            
-            
-            String cleaningTime ="";
-            if(u.bookings.get(i).getTime().equals("09:00")){
-                cleaningTime =  "10:00";
-            }else{
-            cleaningTime = u.bookings.get(i).getTime().substring(0,1)+(Integer.parseInt(u.bookings.get(i).getTime().substring(1,2))+1)+u.bookings.get(i).getTime().substring(2, 5);
-            }
-            b=b+"\n\n Room Number: "+u.bookings.get(i).getRoomNo()+"       "+ u.bookings.get(i).getMonth()+ " / "+u.bookings.get(i).getDay()+ " / "+cleaningTime+"\n"+prep;
+            System.out.println(inOrder.get(k));
+            b = b + inOrder.get(k) + "\n";
         }
         jTextArea1.setText(b);
     }
@@ -68,10 +83,11 @@ public class cleaningView extends javax.swing.JFrame {
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jTextArea1.setColumns(20);
+        jTextArea1.setFont(new java.awt.Font("Monospaced", 1, 18)); // NOI18N
         jTextArea1.setRows(5);
         jScrollPane1.setViewportView(jTextArea1);
 
-        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(218, 70, 670, 329));
+        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(218, 70, 1230, 570));
 
         jButton1.setText("home");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -91,10 +107,10 @@ public class cleaningView extends javax.swing.JFrame {
                 monthSelectionActionPerformed(evt);
             }
         });
-        getContentPane().add(monthSelection, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 420, -1, -1));
+        getContentPane().add(monthSelection, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 660, -1, -1));
 
         daySelection.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31" }));
-        getContentPane().add(daySelection, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 420, 90, -1));
+        getContentPane().add(daySelection, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 660, 90, -1));
 
         jButton2.setText("Search");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
@@ -102,7 +118,7 @@ public class cleaningView extends javax.swing.JFrame {
                 jButton2ActionPerformed(evt);
             }
         });
-        getContentPane().add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 420, -1, -1));
+        getContentPane().add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 660, -1, -1));
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
         jLabel2.setText("after you've finished cleaning please remember to set out resources in the next booked room");
@@ -112,8 +128,8 @@ public class cleaningView extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-      usefulMethods u = new usefulMethods();
-      u.homeButton();
+        usefulMethods u = new usefulMethods();
+        u.homeButton();
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void monthSelectionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_monthSelectionActionPerformed
@@ -122,33 +138,21 @@ public class cleaningView extends javax.swing.JFrame {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         usefulMethods u = new usefulMethods();
-        String b ="";
-        for (int i =0; i<u.bookings.size();i++){
-            if( u.bookings.get(i).getMonth().equals(monthSelection.getSelectedItem().toString())  &&   (u.bookings.get(i).getDay()+"").equals(daySelection.getSelectedItem().toString())){
-                 String prep = "";
-            if(i ==u.bookings.size()-1){
-                prep = " no need to layout resources";
-            }else{
-                try {
-                    prep ="Please set out "+ u.bookings.get(i+1).getResources() +" for the next meeting in room "+u.bookings.get(i+1).getRoomNo();
-                } catch (Exception e) {
-                    System.out.println("error:"+e);
+        String b = "";
+        for (int i = 0; i < u.bookings.size(); i++) {
+            if (u.bookings.get(i).getMonth().equals(monthSelection.getSelectedItem().toString()) && (u.bookings.get(i).getDay() + "").equals(daySelection.getSelectedItem().toString())) {
+               
+
+                String cleaningTime = "";
+                if (u.bookings.get(i).getTime().equals("09:00")) {
+                    cleaningTime = "10:00";
+                } else {
+                    cleaningTime = u.bookings.get(i).getTime().substring(0, 1) + (Integer.parseInt(u.bookings.get(i).getTime().substring(1, 2)) + 1) + u.bookings.get(i).getTime().substring(2, 5);
                 }
-                
-            }
-            
-            
-            
-             String cleaningTime ="";
-            if(u.bookings.get(i).getTime().equals("09:00")){
-                cleaningTime =  "10:00";
-            }else{
-            cleaningTime = u.bookings.get(i).getTime().substring(0,1)+(Integer.parseInt(u.bookings.get(i).getTime().substring(1,2))+1)+u.bookings.get(i).getTime().substring(2, 5);
-            }
-            
-            //String cleaningTime = u.bookings.get(i).getTime().substring(0,1)+(Integer.parseInt(u.bookings.get(i).getTime().substring(1,2))+1)+u.bookings.get(i).getTime().substring(2, 5);
-            b=b+"\n\n Room Number: "+u.bookings.get(i).getRoomNo()+"       "+ u.bookings.get(i).getMonth()+ " / "+u.bookings.get(i).getDay()+ " / "+cleaningTime+"\n"+prep;
-        
+
+                //String cleaningTime = u.bookings.get(i).getTime().substring(0,1)+(Integer.parseInt(u.bookings.get(i).getTime().substring(1,2))+1)+u.bookings.get(i).getTime().substring(2, 5);
+                b = b + ("\nplease set out "+ u.bookings.get(i).getResources()+" for the meeting commencing at "+ u.bookings.get(i).getTime()+" in room "+ u.bookings.get(i).getRoomNo()+"\nplease clean Room Number: " + u.bookings.get(i).getRoomNo() + "       " + u.bookings.get(i).getMonth() + " / " + u.bookings.get(i).getDay() + " / " + cleaningTime + "\n");
+
             }
 
         }
